@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diwanou Al Bachir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #fafafa;
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --gold-dark: #9b7a45;
+      --grey: #6b6b6b;
+      --grey-light: #e8e8e8;
+    }
+
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Background texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201,169,110,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px 60px;
+    }
+
+    /* ── TOP ORNAMENT ── */
+    .ornament {
+      width: 1px;
+      height: 0;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      margin: 0 auto 48px;
+      animation: growLine 1.2s ease forwards 0.3s;
+    }
+    @keyframes growLine {
+      to { height: 60px; }
+    }
+
+    /* ── LOGO MARK ── */
+    .logo-wrap {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.9s ease forwards 0.6s;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .logo-db {
+      width: 90px;
+      height: 90px;
+    }
+
+    /* ── BRAND NAME ── */
+    .brand {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeUp 0.9s ease forwards 0.85s;
+      margin-bottom: 10px;
+    }
+    .brand-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 8vw, 4.2rem);
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--black);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .brand-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.65rem, 2vw, 0.75rem);
+      font-weight: 500;
+      letter-spacing: 0.45em;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ── TAGLINE ── */
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: var(--grey);
+      letter-spacing: 0.04em;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.05s;
+      margin-bottom: 10px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: min(280px, 80%);
+      margin: 0 auto 40px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards 1.2s;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .divider-line:last-child {
+      background: linear-gradient(to left, transparent, var(--gold));
+    }
+    .divider-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 20px 28px;
+      border: 1px solid rgba(201,169,110,0.25);
+      border-radius: 2px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      color: var(--black);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
+    }
+    .card:nth-child(1) { animation: fadeUp 0.8s ease forwards 1.3s; }
+    .card:nth-child(2) { animation: fadeUp 0.8s ease forwards 1.45s; }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,169,110,0.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover {
+      border-color: rgba(201,169,110,0.6);
+      box-shadow: 0 8px 40px rgba(201,169,110,0.12), 0 2px 8px rgba(0,0,0,0.04);
+      transform: translateY(-2px);
+    }
+
+    /* Shimmer on hover */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.45) 50%, transparent 80%);
+      transition: left 0.55s ease;
+    }
+    .card:hover::after { left: 140%; }
+
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,169,110,0.35);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: rgba(201,169,110,0.06);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .card:hover .card-icon {
+      background: rgba(201,169,110,0.14);
+      border-color: var(--gold);
+    }
+    .card-icon svg {
+      width: 20px; height: 20px;
+    }
+
+    .card-text {
+      flex: 1;
+    }
+    .card-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 3px;
+    }
+    .card-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--black);
+    }
+
+    .card-arrow {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0.3;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .card:hover .card-arrow {
+      opacity: 0.75;
+      transform: translateX(4px);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 52px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.7s;
+    }
+    .footer-line {
+      width: 40px; height: 1px;
+      background: var(--gold-light);
+      margin: 0 auto 14px;
+    }
+    .footer-text {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--grey-light);
+      color: #bbb;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ── ACTIVE / PRESS ── */
+    .card:active {
+      transform: scale(0.98) translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 360px) {
+      .brand-main { letter-spacing: 0.15em; }
+      .card { padding: 18px 20px; gap: 14px; }
+      .card-value { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="ornament"></div>
+
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <svg class="logo-db" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- D letter -->
+        <path d="M22 28 L22 92 L44 92 C62 92 74 80 74 60 C74 40 62 28 44 28 Z" stroke="#0a0a0a" stroke-width="5" fill="none" stroke-linejoin="round"/>
+        <!-- B letter -->
+        <path d="M52 28 L52 92" stroke="#0a0a0a" stroke-width="5" fill="none"/>
+        <path d="M52 28 L72 28 C82 28 88 34 88 42 C88 50 82 56 72 56 L52 56" stroke="#0a0a0a" stroke-width="5" fill="none" stroke-linejoin="round"/>
+        <path d="M52 56 L74 56 C85 56 92 62 92 71 C92 80 85 92 74 92 L52 92" stroke="#0a0a0a" stroke-width="5" fill="none" stroke-linejoin="round"/>
+        <!-- Swash -->
+        <path d="M30 72 Q60 50 98 38" stroke="#0a0a0a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M25 76 Q58 54 100 44" stroke="#0a0a0a" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-main">Diwanou</div>
+      <div class="brand-sub">Al Bachir</div>
+    </div>
+
+    <!-- Tagline -->
+    <p class="tagline">Borome Mbécté mi</p>
+
+    <!-- Divider -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-dot"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+
+      <!-- WhatsApp -->
+      <a class="card" href="https://wa.me/221772522425" target="_blank" rel="noopener">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.419A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="#9b7a45" stroke-width="1.5"/>
+            <path d="M8.5 9.5c.3-.7.7-1.5 1.5-1.5.4 0 .7.2.9.5l.8 1.6c.2.4.1.9-.2 1.2l-.4.4c.5 1 1.2 1.8 2.2 2.3l.4-.4c.3-.3.8-.4 1.2-.2l1.6.8c.3.2.5.5.5.9 0 .8-.8 1.5-1.5 1.5-2.8 0-6.5-3.7-6.5-6.5v-.1z" stroke="#9b7a45" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-text">
+          <div class="card-label">WhatsApp</div>
+          <div class="card-value">+221 77 252 24 25</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- TikTok -->
+      <a class="card" href="https://www.tiktok.com/@diwanoualbachir?_r=1&_t=ZS-96V2Mk8sqJ7" target="_blank" rel="noopener">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12a3 3 0 1 0 6 0V4h2.5c.28 1.65 1.45 3 3 3.35v2.5C18.7 9.5 17 8.8 16 7.8V12a5 5 0 1 1-7-4.58V10a3 3 0 0 0 0 2z" stroke="#9b7a45" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-text">
+          <div class="card-label">TikTok</div>
+          <div class="card-value">@diwanoualbachir</div>
+        </div>
+        <div class="card-arrow">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-line"></div>
+      <p class="footer-text">Diwanou Al Bachir &nbsp;·&nbsp; Dakar, Sénégal</p>
+    </div>
+
+  </div>
+
+  <script>
+    // Ripple effect on card click
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = card.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 1.2;
+        ripple.style.cssText = `
+          position:absolute;
+          border-radius:50%;
+          background:rgba(201,169,110,0.18);
+          width:${size}px;height:${size}px;
+          left:${e.clientX - rect.left - size/2}px;
+          top:${e.clientY - rect.top - size/2}px;
+          transform:scale(0);
+          animation:ripple 0.6s ease-out forwards;
+          pointer-events:none;
+        `;
+        card.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 700);
+      });
+    });
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to { transform: scale(1); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
